@@ -262,12 +262,6 @@ That is **≈ $0.089 per report**. SMS is ~95% of the bill; with a sponsored sho
 - Firestore writes are best-effort in the demo; production needs App Check, a responder role and a queue for alert fan-out.
 - Full offline navigation depends on the service worker after a first successful visit; the form itself degrades to local storage + edge triage.
 
-## Pitch
-
-The app is deliberately product-only. The 3-minute pitch deck, one-pager and script are maintained locally and are **not part of this public repository**. The live 20-second report demo is at `/report`.
-
-**The ask:** a 90-day pilot in Bwaise and Kisenyi with KCCA, Uganda Red Cross and two Luganda radio partners. $15,000 for 50 community monitors, three months of SMS/radio and independent M&E.
-
 ## Credits
 
 - Division boundaries: [geoBoundaries](https://www.geoboundaries.org/) UGA ADM4, CC BY 3.0 IGO.
