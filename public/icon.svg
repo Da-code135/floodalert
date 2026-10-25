@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="FloodAlert">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1c28"/>
+      <stop offset="1" stop-color="#05090f"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8beeff"/>
+      <stop offset="1" stop-color="#3ee0ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#3ee0ff" stroke-opacity="0.3"/>
+  <path d="M8 40c6.4 0 7.6-19 14.4-19S30.9 40 37 40s8.6-19 15.2-19c2.8 0 4.2 4 4.6 8" fill="none" stroke="url(#wave)" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M9 50c6.2 0 7.4-8.8 13.8-8.8S30 50 36.4 50s8.4-8.8 14.6-8.8c2.8 0 4.2 2 4.4 4" fill="none" stroke="#b9f45b" stroke-width="3.4" stroke-linecap="round" opacity="0.88"/>
+  <circle cx="16.4" cy="22" r="2.2" fill="#3ee0ff"/>
+</svg>

@@ -1,0 +1,43 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: build
+    args:
+      - build
+      - --build-arg=NEXT_PUBLIC_SITE_URL=https://floodalert.example
+      - -t
+      - gcr.io/$PROJECT_ID/floodalert:$SHORT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    id: push
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/floodalert:$SHORT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: deploy
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - floodalert
+      - --image=gcr.io/$PROJECT_ID/floodalert:$SHORT_SHA
+      - --region=${_REGION}
+      - --platform=managed
+      - --allow-unauthenticated
+      - --port=3000
+      - --memory=512Mi
+      - --cpu=1
+      - --min-instances=0
+      - --max-instances=10
+      - --set-secrets=GEMINI_API_KEY=gemini-api-key:latest
+      - --set-env-vars=NEXT_PUBLIC_SITE_URL=https://floodalert.example
+
+substitutions:
+  _REGION: europe-west1
+
+images:
+  - gcr.io/$PROJECT_ID/floodalert:$SHORT_SHA
+
+options:
+  logging: CLOUD_LOGGING_ONLY

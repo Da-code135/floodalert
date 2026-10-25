@@ -1,0 +1,71 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Demo rules: any signed-in anonymous user can file a report and read the
+    // shared operating picture. Alerts are written by the app after a report
+    // is verified. For production, replace `signedIn()` on the alert create
+    // and report update rules with a responder custom claim, for example:
+    //   request.auth.token.get('responder', false) == true
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /reports/{reportId} {
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && request.resource.data.id == reportId
+        && request.resource.data.keys().hasAll([
+          'id', 'area', 'division', 'landmark', 'lat', 'lng', 'depthCm',
+          'hazards', 'description', 'severity', 'confidence', 'source',
+          'status', 'reporter', 'createdAt', 'updatedAt', 'ai'
+        ])
+        && request.resource.data.division in [
+          'Kampala Central', 'Kawempe', 'Lubaga', 'Makindye', 'Nakawa'
+        ]
+        && request.resource.data.depthCm is int
+        && request.resource.data.depthCm >= 0
+        && request.resource.data.depthCm <= 300
+        && request.resource.data.confidence >= 0
+        && request.resource.data.confidence <= 1
+        && request.resource.data.severity in [
+          'low', 'moderate', 'severe', 'critical'
+        ]
+        && request.resource.data.status == 'unverified'
+        && request.resource.data.createdAt is string
+        && request.resource.data.updatedAt is string;
+
+      allow update: if signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'status', 'updatedAt'
+        ])
+        && request.resource.data.status in [
+          'verified', 'responding', 'resolved'
+        ];
+
+      allow delete: if false;
+    }
+
+    match /alerts/{alertId} {
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && request.resource.data.id == alertId
+        && request.resource.data.keys().hasAll([
+          'id', 'division', 'severity', 'title', 'messageEn', 'messageLg',
+          'channels', 'reach', 'sentAt', 'status'
+        ])
+        && request.resource.data.reach is int
+        && request.resource.data.reach >= 0
+        && request.resource.data.severity in [
+          'low', 'moderate', 'severe', 'critical'
+        ]
+        && request.resource.data.channels.size() > 0
+        && request.resource.data.sentAt is string;
+
+      allow update, delete: if false;
+    }
+  }
+}

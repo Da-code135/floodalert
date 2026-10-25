@@ -1,0 +1,33 @@
+{
+  "name": "FloodAlert — Kampala flood warning",
+  "short_name": "FloodAlert",
+  "description": "FloodAlert is a community-powered flood early warning for Kampala: report, verify and alert the last mile.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05090f",
+  "theme_color": "#05090f",
+  "orientation": "portrait-primary",
+  "categories": ["weather", "utilities", "government"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Report flooding",
+      "short_name": "Report",
+      "url": "/report",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Live alerts",
+      "short_name": "Alerts",
+      "url": "/alerts",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
